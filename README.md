@@ -1,6 +1,6 @@
 # Fraud Shield v5 – bản trọng số RiskScore 0,5 · 0,1 · 0,4
 
-> **Bản thử nghiệm trọng số:** RiskScore = **0,5 × hồi quy logistic + 0,1 × hệ luật + 0,4 × Isolation Forest** (bản gốc `fraudshield-v5-troly` dùng 0,6 · 0,3 · 0,1). Mọi phần khác giữ nguyên; ngưỡng tạm giữ / xác thực thêm được chọn lại tự động từ dữ liệu (0,7653 / 0,5576).
+> **Bản thử nghiệm trọng số:** RiskScore = **0,5 × hồi quy logistic + 0,1 × hệ luật + 0,4 × Isolation Forest** (bản gốc `fraudshield-v5-troly` dùng 0,6 · 0,3 · 0,1). Mọi phần khác giữ nguyên; ngưỡng chặn / xác thực thêm được chọn lại tự động từ dữ liệu (0,7653 / 0,5576).
 
 Team **Round Robin** · Festival Chuyển đổi số 2026 · Bảng B · case Digital Payment Fraud Shield.
 Giao diện v4: menu 6 nhóm có mục con, trang dài chia thành thẻ. v5 thêm **ô trợ lý ở góc dưới phải**. Lõi mô hình giữ nguyên bản v3.2.
@@ -19,10 +19,10 @@ Kết quả trên Data Pack BTC (kiểm định 5-fold, ngưỡng lồng – s�
 
 | Chỉ số | Kết quả |
 |---|---|
-| Gian lận bị can thiệp (tạm giữ hoặc xác thực thêm) | 118/128 · 4,01% khách thật phải xác thực thêm |
+| Gian lận bị can thiệp (chặn hoặc xác thực thêm) | 118/128 · 4,01% khách thật phải xác thực thêm |
 | Giá trị tiền gian lận bị chặn | 94,8% (98,1% nếu tính cả xác thực thêm) |
 | Recall theo vụ tấn công | 90,2% (101/112 vụ) |
-| Recall – tạm giữ (HIGH/CRITICAL) | 87,5% (112/128) · 9 báo nhầm / 1.872 · precision 0,926 · F1 0,900 · PR-AUC 0,933 |
+| Recall – chặn (HIGH/CRITICAL) | 87,5% (112/128) · 9 báo nhầm / 1.872 · precision 0,926 · F1 0,900 · PR-AUC 0,933 |
 | Kiểm tra theo thời gian (học T1–4, thử T5–6) | F1 0,872 · can thiệp 86,4% |
 | Kiểu gian lận chưa từng học (ẩn từng kiểu) | chặn 87/128 · can thiệp **118/128 (92,2%)** – không có lớp ngữ cảnh: 101/128 |
 | Chấm điểm thời gian thực | trùng 100% với chấm theo lô trên 8.000 giao dịch (cả lớp ngữ cảnh) · ~0,5 ms/giao dịch |
@@ -33,7 +33,7 @@ Menu gồm 6 mục; bấm một mục để mở trang (riêng Dữ liệu & qu�
 
 | Mục menu | Mục con | Thẻ trong trang |
 |---|---|---|
-| **Tổng quan** | – | Dashboard (chỉ đếm trên 8.000 giao dịch): 1 Đã phân tích bao nhiêu → 2 Phát hiện bao nhiêu rủi ro → 3 Nguyên nhân → 4 Giao dịch có điểm Isolation Forest cao (tất cả giao dịch điểm IF cao ngoài nhóm tạm giữ, có nhãn BTC xếp trên) → 5 Hàng đợi hồ sơ. Tra cứu mặc định xếp CRITICAL → HIGH → MEDIUM → LOW |
+| **Tổng quan** | – | Dashboard (chỉ đếm trên 8.000 giao dịch): 1 Đã phân tích bao nhiêu → 2 Phát hiện bao nhiêu rủi ro → 3 Nguyên nhân → 4 Giao dịch có điểm Isolation Forest cao (tất cả giao dịch điểm IF cao ngoài nhóm chặn, có nhãn BTC xếp trên) → 5 Hàng đợi hồ sơ. Tra cứu mặc định xếp CRITICAL → HIGH → MEDIUM → LOW |
 | **Nhật ký xử lý** | – | – |
 | **Kiểm định** (2.000 giao dịch có nhãn) | – | Tổng hợp · Danh sách giao dịch có nhãn · Bắt đúng · Bỏ sót · Bắt sai · Thử đổi ngưỡng · So với bản 0,6 · 0,3 · 0,1 |
 | **Giám sát thời gian thực** | – | Cần xử lý ngay · Biểu đồ điểm · Giao dịch đang đến · Đối chiếu bộ mẫu |
