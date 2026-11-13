@@ -19,10 +19,10 @@ Kết quả trên Data Pack BTC (kiểm định 5-fold, ngưỡng lồng – s�
 
 | Chỉ số | Kết quả |
 |---|---|
-| Recall can thiệp (chặn hoặc xác thực thêm) | 92,2% (118/128) · 4,01% khách thật phải xác thực thêm |
+| Gian lận bị can thiệp (tạm giữ hoặc xác thực thêm) | 118/128 · 4,01% khách thật phải xác thực thêm |
 | Giá trị tiền gian lận bị chặn | 94,8% (98,1% nếu tính cả xác thực thêm) |
 | Recall theo vụ tấn công | 90,2% (101/112 vụ) |
-| Recall chặn ngay (HIGH/CRITICAL) | 87,5% (112/128) · 9 báo nhầm / 1.872 · precision 0,926 · F1 0,900 · PR-AUC 0,933 |
+| Recall – tạm giữ (HIGH/CRITICAL) | 87,5% (112/128) · 9 báo nhầm / 1.872 · precision 0,926 · F1 0,900 · PR-AUC 0,933 |
 | Kiểm tra theo thời gian (học T1–4, thử T5–6) | F1 0,872 · can thiệp 86,4% |
 | Kiểu gian lận chưa từng học (ẩn từng kiểu) | chặn 87/128 · can thiệp **118/128 (92,2%)** – không có lớp ngữ cảnh: 101/128 |
 | Chấm điểm thời gian thực | trùng 100% với chấm theo lô trên 8.000 giao dịch (cả lớp ngữ cảnh) · ~0,5 ms/giao dịch |

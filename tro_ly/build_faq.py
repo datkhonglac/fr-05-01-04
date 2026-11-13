@@ -169,11 +169,9 @@ Q = [
      "căn cứ pháp lý|thông tư 17|tt25|quyết định 2345|nghị định 52",
      "Chủ yếu dựa trên các dấu hiệu giao dịch đáng ngờ của Thông tư 17/2024 (sửa đổi bởi TT 25/2025), Quyết định "
      "2345/QĐ-NHNN về xác thực sinh trắc học, Nghị định 52/2024 và các thông tư về an toàn thiết bị.", ""),
-    ("F04", "Mô hình & kiểm định", "Recall can thiệp và recall tạm giữ khác nhau thế nào?",
-     "recall 92,2|recall 87,5|hai recall|recall can thiệp là gì|recall trên 90|recall chặn ngay",
-     "**Recall tạm giữ** (87,5% – 112/128) đếm gian lận bị tạm giữ ngay. **Recall can thiệp** (92,2% – 118/128) đếm cả "
-     "gian lận bị tạm giữ lẫn bị bắt xác thực thêm – vì kẻ gian không qua được bước xác thực. Đổi lại 4,01% giao dịch "
-     "thật phải xác thực thêm vài giây.", "ev_kpi"),
+    ("F04", "Mô hình & kiểm định", "Ngưỡng xác thực thêm 0,5576 được chọn thế nào?",
+     "ngưỡng 0,5576|ngưỡng xác thực thêm|ngưỡng medium|0,5576|ngưỡng otp|recall can thiệp",
+     "Là ngưỡng **cao nhất** vẫn đưa ít nhất **91% gian lận** trên dữ liệu học vào diện tạm giữ hoặc xác thực thêm, với điều kiện **không quá 5% khách thật** phải xác thực thêm. Kiểm định 5-fold: 118/128 gian lận bị tạm giữ hoặc xác thực thêm, 4,01% khách thật phải nhập OTP.", "ev_kpi"),
     ("F05", "Mô hình & kiểm định", "Mô hình có bắt được kiểu gian lận mới không?",
      "gian lận kiểu mới|kiểu chưa từng thấy|ẩn từng kiểu|loto|novelty",
      "Có kiểm chứng bằng thí nghiệm **ẩn từng kiểu**: bỏ hẳn nhãn của một kiểu khỏi dữ liệu học rồi xem hệ thống còn bắt "
@@ -212,7 +210,7 @@ Q = [
     ("F13", "Mô hình & kiểm định", "Kết quả kiểm định được tính thế nào, có đáng tin không?",
      "kiểm định chéo|5 fold|nested cv|cách đánh giá|time split",
      "Kiểm định chéo 5 lần, phân tầng; mô hình, trọng số luật và ngưỡng chỉ học trên phần huấn luyện của từng lần. Thêm "
-     "kiểm tra theo thời gian: học tháng 1–4, thử tháng 5–6 – recall can thiệp 86,4%.", "ev_kpi"),
+     "kiểm tra theo thời gian: học tháng 1–4, thử tháng 5–6 – 86,4% gian lận bị can thiệp.", "ev_kpi"),
     ("F14", "Mô hình & kiểm định", "Chấm một giao dịch mất bao lâu?",
      "tốc độ chấm|độ trễ|latency|bao nhiêu ms",
      "Khoảng 1 ms mỗi giao dịch khi chấm theo luồng (0,5–2 ms tuỳ máy chủ). Xem ô **ms / giao dịch** trên dải xanh của trang **Giám sát thời gian thực**.", "live"),
