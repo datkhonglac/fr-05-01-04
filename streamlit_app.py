@@ -2430,20 +2430,26 @@ def eval_threshold(res):
     rep, df, lv = res["report"], res["df"], res["lab_view"]
     with card("thr"):
         title("Thử thay đổi ngưỡng cảnh báo",
-              "Kéo thanh trượt để thấy đánh đổi giữa bắt được nhiều gian lận và báo nhầm. Điểm dùng ở đây là điểm "
+              "Nhập ngưỡng (0,05 – 0,99) hoặc chọn một mốc có sẵn để thấy đánh đổi giữa bắt được nhiều gian lận và "
+              "báo nhầm. Điểm dùng ở đây là điểm "
               "out-of-fold tại một ngưỡng cố định nên có thể chênh nhẹ so với bảng so sánh (ngưỡng lồng).")
         key = f"thr_{res['rid']}"
         cost = rep["cost_threshold"]["threshold"]
         if key not in st.session_state:
             st.session_state[key] = float(rep["threshold"])
-        b1, b2, b3, _ = st.columns([1, 1.15, 1.3, 0.6])
+        H('<div class="fs thr-lab">Ngưỡng tạm giữ</div>')
+        c0, b1, b2, b3 = st.columns([0.9, 1, 1.15, 1.3], vertical_alignment="bottom")
+        with c0:
+            t = st.number_input("Ngưỡng tạm giữ", min_value=0.05, max_value=0.99, step=0.01, format="%.4f", key=key,
+                                label_visibility="collapsed",
+                                help="Gõ số rồi nhấn Enter; nút +/− đổi mỗi lần 0,01")
+        t = float(t if t is not None else (st.session_state.get(key) or rep["threshold"]))
         b1.button(f"Ngưỡng chặn · {d(rep['threshold'], 4)}", width="stretch", key=f"pf_{res['rid']}",
                   on_click=lambda: st.session_state.update({key: float(rep["threshold"])}))
         b2.button(f"Ngưỡng xác thực thêm · {d(rep['medium_threshold'], 4)}", width="stretch", key=f"pm_{res['rid']}",
                   on_click=lambda: st.session_state.update({key: float(rep["medium_threshold"])}))
         b3.button(f"Theo chi phí (bỏ sót = 10 × báo nhầm) · {d(cost, 4)}", width="stretch", key=f"pc_{res['rid']}",
                   on_click=lambda: st.session_state.update({key: float(cost)}))
-        t = st.slider("Ngưỡng", 0.05, 0.99, step=0.0005, format="%.4f", key=key)
         y, s = lv.y.values, lv.score.values
         pred = s >= t
         tp, fp, fn = int((pred & (y == 1)).sum()), int((pred & (y == 0)).sum()), int((~pred & (y == 1)).sum())
@@ -3967,6 +3973,8 @@ border-radius:999px;padding:3px 10px}
 .as-sc .dot{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:5px;vertical-align:middle}
 .as-sc table.cs td:nth-child(2){text-align:left}
 .as-verdict{font-size:12.5px;margin-top:5px}
+.thr-lab{font-size:13px;font-weight:600;color:#344054;margin:4px 0 -6px}
+[class*="st-key-thr_"] input{font-size:18px!important;font-weight:700;color:#0B1F45}
 .as-sec{font-weight:800;font-size:12.5px;margin:10px 0 4px;color:#0B1F45}
 .as-vd{border-radius:8px;padding:7px 9px;font-size:12.5px;margin-top:4px}
 .as-vd.bad{background:#FFF0F0;border:1px solid #FFC9C9}.as-vd.good{background:#E6F4EA;border:1px solid #B7E1C1}
