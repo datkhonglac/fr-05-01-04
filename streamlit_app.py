@@ -1967,6 +1967,14 @@ def _ev_open_assistant(tid):
     st.session_state.as_q_id = tid
 
 
+def _fold_note(lv):
+    if "thr_fold" not in lv.columns:
+        return "Kết quả tính theo ngưỡng tạm giữ. Bấm vào dòng để xem chi tiết."
+    lo, hi = float(lv.thr_fold.min()), float(lv.thr_fold.max())
+    return (f"Kết quả tính theo ngưỡng tạm giữ của từng fold ({d(lo, 3)}–{d(hi, 3)}), nên một số giao dịch RiskScore trên "
+            f"{d(lo, 3)} vẫn có thể là bỏ sót. Bấm vào dòng để xem chi tiết.")
+
+
 def eval_lists(res, which):
     t = lab_table(res)
     rep = res["report"]
@@ -2001,12 +2009,9 @@ def eval_lists(res, which):
                    kcard(pct(len(show) / max(1, n_lg), 2), "Tỷ lệ giữ nhầm", MUTED, "trên giao dịch thật có nhãn")])
         if which in (3, 4) and new:
             out = pd.DataFrame({"Mã giao dịch": show.transaction_id, "Nhãn BTC": show.nhan,
-                                "RiskScore": show.score.round(3), "Ngưỡng tạm giữ": show.thr_fold.round(3),
-                                "Chênh lệch": (show.score - show.thr_fold).round(3), "Kết quả": show.ket_qua,
+                                "RiskScore": show.score.round(3), "Kết quả": show.ket_qua,
                                 "Vì sao": show.ly_do.values, "Số tiền (₫)": show.amount})
             cfg = {"RiskScore": st.column_config.ProgressColumn(min_value=0, max_value=1, format="%.3f"),
-                   "Ngưỡng tạm giữ": st.column_config.NumberColumn(format="%.3f", help="Ngưỡng của fold đã chấm giao dịch"),
-                   "Chênh lệch": st.column_config.NumberColumn(format="%+.3f", help="Điểm trừ ngưỡng: âm = thiếu, dương = vượt"),
                    "Số tiền (₫)": st.column_config.NumberColumn(format="localized"),
                    "Vì sao": st.column_config.TextColumn(width="large")}
         else:
@@ -2020,6 +2025,7 @@ def eval_lists(res, which):
                    "RiskScore": st.column_config.NumberColumn(format="%.3f"),
                    "Gấp mức nền": st.column_config.NumberColumn(format="%.1f"),
                    "Vì sao": st.column_config.TextColumn(width="large")}
+        st.caption(_fold_note(res["lab_view"]))
         ev = grid(out, height=min(560, 38 + 35 * max(1, len(out))), column_config=cfg, on_select="rerun",
                   selection_mode="single-row", key=f"ev_tbl_{res['rid']}_{which}_{st.session_state.get('ev_list_pick', '')}")
         try:
@@ -2037,7 +2043,7 @@ def eval_lists(res, which):
         st.caption("Bấm chọn một dòng (ô vuông đầu dòng) để mở giải thích chi tiết trong trợ lý: tách RiskScore thành "
                    "LR · Luật · IF, so với ngưỡng của fold và với các ca bắt đúng, kèm hướng cải thiện. "
                    "RiskScore của 2.000 giao dịch có nhãn là điểm kiểm định: mỗi giao dịch được chấm bởi mô hình học trên 4/5 dữ liệu "
-                   "còn lại (chưa thấy nhãn của nó). Ngưỡng tạm giữ chọn riêng trong từng fold nên hơi khác nhau giữa các fold.")
+                   "còn lại (chưa thấy nhãn của nó).")
         if which == 3 and len(show):
             n_mp = int((show.ket_qua == "Xác thực thêm").sum())
             lot = show[show.ket_qua == "Cho qua"].nhan.str.replace("Gian lận · ", "").value_counts()
