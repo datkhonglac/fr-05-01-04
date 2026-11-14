@@ -2532,7 +2532,7 @@ def eval_weights(res):
                 return ""
             v = a[k] - b[k]
             return "bằng mặc định" if abs(v) < 5e-4 else f"{'+' if v > 0 else '−'}{d(abs(v))} so với mặc định"
-        H('<div class="thr-lab">Tổng trọng số: <b>1,00</b> ✓</div>')
+        H('<div class="wt-sum">✓ Tổng trọng số: <b>1,00</b></div>')
         kgrid([kcard(d(a["P"]), "Precision", BLUE, f"{a['tp']} / {a['tp'] + a['fp']} cảnh báo là gian lận thật", delta("P")),
                kcard(d(a["R"]), "Recall", GREEN, f"{a['tp']} / {a['tp'] + a['fn']} gian lận bị chặn", delta("R")),
                kcard(d(a["F1"]), "F1-score", PURPLE, f"mặc định {d(b['F1'])}" if not same else "", delta("F1")),
@@ -4046,6 +4046,7 @@ border-radius:999px;padding:3px 10px}
 .as-sc table.cs td:nth-child(2){text-align:left}
 .as-verdict{font-size:12.5px;margin-top:5px}
 .thr-lab{font-size:13px;font-weight:600;color:#344054;margin:4px 0 -6px}
+.wt-sum{display:inline-block;font-size:13px;font-weight:600;color:#067647;background:#ECFDF3;border:1px solid #ABEFC6;border-radius:999px;padding:4px 12px;margin:2px 0 10px}
 [class*="st-key-thr_"] input,[class*="st-key-thrm_"] input,[class*="st-key-thrc_"] input,[class*="st-key-wf_"] input{font-size:18px!important;font-weight:700;color:#0B1F45}
 .as-sec{font-weight:800;font-size:12.5px;margin:10px 0 4px;color:#0B1F45}
 .as-vd{border-radius:8px;padding:7px 9px;font-size:12.5px;margin-top:4px}
